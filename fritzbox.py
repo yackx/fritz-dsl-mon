@@ -25,9 +25,70 @@ import ssl
 import re
 from urllib.request import urlopen
 from xml.etree.ElementTree import parse
+from dataclasses import dataclass
 
 # Documentation of Fritz AHA see:
 # http://avm.de/fileadmin/user_upload/Global/Service/Schnittstellen/AHA-HTTP-Interface.pdf
+
+
+@dataclass
+class DslStat:
+    # Max DSLAM throughput (kbit/s)
+    # Min is also available but not mapped
+    max_dslam_throughput_down: int
+    max_dslam_throughput_up: int
+
+    # Attainable throughput (kbit/s)
+    attainable_throughput_down: int
+    attainable_throughput_up: int
+
+    # Current throughput (kbit/s)
+    current_throughput_down: int
+    current_throughput_up: int
+
+    # Seamless rate adaptation
+    seamless_rate_adaptation_down: bool
+    seamless_rate_adaptation_up: bool
+
+    # Latency (a qualifier) (exact meaning and possible values unknown)
+    latency_down: str
+    latency_up: str
+
+    # Impulse Noise Protection (INP) (unit not specified)
+    impulse_noise_protection_down: int
+    impulse_noise_protection_up: int
+
+    # G.INP https://www.increasebroadbandspeed.co.uk/g.inp
+    g_inp_down: bool
+    g_inp_up: bool
+
+    # Signal-to-noise ratio (dB)
+    signal_to_noise_ratio_down: int
+    signal_to_noise_ratio_up: int
+
+    # Bitswap
+    bitswap_down: bool
+    bitswap_up: bool
+
+    # Line attenuation (dB)
+    line_attenuation_down: int
+    line_attenuation_up: int
+    
+    # Approximate line length (m)
+    approximate_line_length: int
+
+    # Profile (eg 17a)
+    profile: str
+
+    # G.Vector (eg full)
+    g_vector_down: str
+    g_vector_up: str
+
+    # Carrier record (eg A43)
+    carrier_record_down: str
+    carrier_record_up: str
+
+
 
 
 class FritzBox:
@@ -91,6 +152,13 @@ class FritzBox:
         stats['current_throughput_up'] = current[1]
 
         print(f'stats {stats}')
+        
+        dsl_stats = DslStat(
+                max_dslam_throughput_down = max_dslam[0],
+                max_dslam_throughput_up = max_dslam[1],
+        )
+        print(dsl_stats)
+
         return stats
         
 
