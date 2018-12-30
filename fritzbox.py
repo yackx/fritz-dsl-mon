@@ -28,7 +28,7 @@ from xml.etree.ElementTree import parse
 # Documentation of Fritz AHA see:
 # http://avm.de/fileadmin/user_upload/Global/Service/Schnittstellen/AHA-HTTP-Interface.pdf
 
-class FritzHomeAuto:
+class FritzBox:
     def __init__(self, user, password, url):
         """Create a connection to the Fritz!Box with the given user and password"""
         self.fritzurl = url
@@ -95,6 +95,6 @@ if __name__ == "__main__":
     if getattr(ssl, '_create_unverified_context', None):
         ssl._create_default_https_context = ssl._create_unverified_context
     
-    fritz = FritzHomeAuto(args.user, args.password, host)
+    fritz = FritzBox(args.user, args.password, host)
     fritz.load_dsl_stats()
     fritz.logout()
