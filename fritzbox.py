@@ -22,11 +22,13 @@ import argparse
 import hashlib
 import os
 import ssl
+import re
 from urllib.request import urlopen
 from xml.etree.ElementTree import parse
 
 # Documentation of Fritz AHA see:
 # http://avm.de/fileadmin/user_upload/Global/Service/Schnittstellen/AHA-HTTP-Interface.pdf
+
 
 class FritzBox:
     def __init__(self, user, password, url):
@@ -72,6 +74,33 @@ class FritzBox:
         with self.open_page(path) as f:
             result = f.read()
         print(result.decode())
+        # print(result)
+        decoded = result.decode()
+        stats = dict()
+
+        max_dslam = re.findall(self.build_html_regex('Max. DSLAM throughput'), decoded)[0]
+        stats['max_dslam_throughput_down'] = max_dslam[0]
+        stats['max_dslam_throughput_up'] = max_dslam[1]
+
+        attainable = re.findall(self.build_html_regex('Attainable throughput'), decoded)[0]
+        stats['attainable_throughput_down'] = attainable[0]
+        stats['attainable_throughput_up'] = attainable[1]
+
+        current = re.findall(self.build_html_regex('Current throughput'), decoded)[0]
+        stats['current_throughput_down'] = current[0]
+        stats['current_throughput_up'] = current[1]
+
+        print(f'stats {stats}')
+        return stats
+        
+
+    def build_html_regex(self, column_title):
+        return re.compile(r'<tr>'
+            rf'<td class="c1">{column_title}</td>'
+            r'<td class="c2">kbit/s</td>'
+            r'<td class="c3">(\d+)</td>'
+            r'<td class="c4">(\d+)</td>'
+            r'</tr>')
 
 
     def open_page(self, path):
