@@ -106,7 +106,7 @@ class FritzBox:
                 'seamless_rate_adaptation_up': seamless[2],
                  # Latency (a qualifier) (exact meaning and possible values unknown)
                 'latency_down': latency[1],
-                'latency_up': latency[1],
+                'latency_up': latency[2],
                 # Impulse Noise Protection (INP) (unit not specified)
                 'impulse_noise_protection_down': inp[1],
                 'impulse_noise_protection_up': inp[2],
