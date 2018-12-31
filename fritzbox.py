@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 #
-# fritzswitch - Switch your Fritz!DECT200 via command line
+# fritz-dsl-mon - Monitor your DSL performance via your Fritz!Box 7430
+# Copyright (C) 2019 Youri Ackx 
 #
-# Copyright (C) 2014 Richard "Shred" Körber
-#
+# Contains fragments of "fritzswitch - Switch your Fritz!DECT200 via command line"
+# (sid with md5 encoded challenge)
+# Copyright (C) 2014 Richard "Shred" Körber released under GNU GPL license
+# https://github.com/shred/fritzswitch
+#  
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as
 # published by the Free Software Foundation, either version 3 of the
@@ -26,7 +30,7 @@ import re
 from urllib.request import urlopen
 from xml.etree.ElementTree import parse
 
-# Documentation of Fritz AHA see:
+# Documentation of Fritz AHA (in German, similarities with Fritz!Box 7430):
 # http://avm.de/fileadmin/user_upload/Global/Service/Schnittstellen/AHA-HTTP-Interface.pdf
 
 
@@ -38,7 +42,7 @@ class FritzBox:
 
 
     def get_sid(self, user, password):
-        """Authenticate and get a Session ID"""
+        """Authenticate and get a session ID"""
         with urlopen(self.fritzurl + '/login_sid.lua') as f:
             dom = parse(f)
             sid = dom.findtext('./SID')
@@ -62,11 +66,13 @@ class FritzBox:
 
 
     def logout(self):
+        """Logout"""
         path = '/index.lua?sid=' + self.sid
         self.open_page(path)
 
 
     def load_dsl_stats(self):
+        """Load DSL statistics by scraping HTML from DSL Information page"""
         path = '/internet/dsl_stats_tab.lua?sid=' + self.sid
         with self.open_page(path) as f:
             result = f.read()
@@ -148,6 +154,7 @@ class FritzBox:
         
 
     def scrape_values(self, column_title, html_content, how_nany = 3):
+        """Scrape 3 or 4 column values from the DSL Information page"""
         assert how_nany in [3, 4]
         regex = (r'<tr>'
             rf'<td class="c1.*">{column_title}</td>'
