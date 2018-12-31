@@ -1,0 +1,255 @@
+{
+    "data": {
+        "naslink": "nasSet",
+        "fritzos": {
+            "Productname": "FRITZ!Box 7430",
+            "NoPwd": false,
+            "ShowDefaults": false,
+            "expert_mode": "1",
+            "fb_name": "",
+            "nspver_lnk": "\/home\/pp_fbos.lua?sid=08dc2038a4cddc35",
+            "nspver": "07.01",
+            "isLabor": false,
+            "FirmwareSigned": true,
+            "showUpdate": true,
+            "isUpdateAvail": false,
+            "energy": "47",
+            "boxDate": "12:35:03 29.12.2018"
+        },
+        "webdav": "0",
+        "MANUAL_URL": "http:\/\/www.avm.de\/en\/service\/manuals\/index.php",
+        "language": "en",
+        "AVM_URL": "http:\/\/www.avm.de\/en",
+        "usbconnect": "nousbstore",
+        "foncalls": {
+            "calls": [{
+                "number": "010413001",
+                "link": "fonbook_addnum",
+                "date": "17. Dec.",
+                "duration": "0:00",
+                "addible": true,
+                "classes": "call_in_fail",
+                "name": "",
+                "display": "010413001 ",
+                "fonname": "",
+                "unknown": false,
+                "time": "15:37"
+            }, {
+                "number": "025331011",
+                "link": "fonbook_addnum",
+                "date": "23. Nov.",
+                "duration": "0:00",
+                "addible": true,
+                "classes": "call_in_fail",
+                "name": "",
+                "display": "025331011 ",
+                "fonname": "",
+                "unknown": false,
+                "time": "13:50"
+            }, {
+                "number": "025331011",
+                "link": "fonbook_addnum",
+                "date": "23. Nov.",
+                "duration": "0:00",
+                "addible": true,
+                "classes": "call_in_fail",
+                "name": "",
+                "display": "025331011 ",
+                "fonname": "",
+                "unknown": false,
+                "time": "13:49"
+            }, {
+                "number": "0479556787",
+                "link": "fonbook_addnum",
+                "date": "02. Nov.",
+                "duration": "0:00",
+                "addible": true,
+                "classes": "call_in_fail",
+                "name": "",
+                "display": "0479556787 ",
+                "fonname": "",
+                "unknown": false,
+                "time": "10:53"
+            }, {
+                "number": "0468200750",
+                "link": "fonbook_addnum",
+                "date": "25. July",
+                "duration": "0:00",
+                "addible": true,
+                "classes": "call_in_fail",
+                "name": "",
+                "display": "0468200750 ",
+                "fonname": "",
+                "unknown": false,
+                "time": "13:08"
+            }, {
+                "number": "035441941",
+                "link": "fonbook_addnum",
+                "date": "13. Feb.",
+                "duration": "0:00",
+                "addible": true,
+                "classes": "call_in_fail",
+                "name": "",
+                "display": "035441941 ",
+                "fonname": "",
+                "unknown": false,
+                "time": "10:11"
+            }],
+            "callsToday": "0",
+            "count_all": 7,
+            "activecalls": "",
+            "count_today": 0
+        },
+        "vpn": {
+            "elements": [],
+            "title": "Remote connect.",
+            "link": "shareVpn"
+        },
+        "internet": {
+            "txt": [" Provider: EDPnet DSL", "connected since 29.12.2018, 03:57"],
+            "led": "globe_online",
+            "title": "Internet",
+            "up": "↑ 20,0 Mbit\/s",
+            "link2": "mobile",
+            "down": "↓ 70,0 Mbit\/s",
+            "link": "mNetMoni"
+        },
+        "dsl": {
+            "txt": "connected",
+            "led": "led_green",
+            "title": "DSL",
+            "up": "↑ 20,0 Mbit\/s",
+            "addDiag": "",
+            "dsl_diag_active": "0",
+            "down": "↓ 70,0 Mbit\/s",
+            "link": "dslOv"
+        },
+        "SERVICEPORTAL_URL": "",
+        "comfort": {
+            "func": [{
+                "linktxt": "Telephone Book",
+                "details": "1 telephone book available",
+                "link": "bookLi"
+            }, {
+                "linktxt": "Port Sharing",
+                "details": "enabled, 2 port sharing configured",
+                "link": "portoverview"
+            }, {
+                "linktxt": "Storage (NAS)",
+                "details": "disabled",
+                "link": "nasSet"
+            }, {
+                "linktxt": "Parental Controls",
+                "details": "ready",
+                "link": "kidLis"
+            }, {
+                "linktxt": "FRITZ!Box services",
+                "details": "can be accessed from the internet (HTTPS)",
+                "link": "remoteHttps"
+            }],
+            "anyComfort": true
+        },
+        "tamcalls": {
+            "calls": "",
+            "tam_configured": true,
+            "count": 0,
+            "callsToday": "0"
+        },
+        "lan": {
+            "txt": "connected (LAN 1, LAN 2)",
+            "led": "led_green",
+            "title": "LAN",
+            "link": "netDev"
+        },
+        "wlan24": {
+            "txt": "with, radio network: mulder",
+            "led": "led_green",
+            "title": "Wireless",
+            "link": "wSet",
+            "tooltip": "with"
+        },
+        "usb": {
+            "txt": "no device connected",
+            "led": "led_gray",
+            "title": "USB",
+            "link": "usbOv"
+        },
+        "timestamp": 2337,
+        "fonnum": {
+            "txt": "1 Telephone numbers enabled: 010460113",
+            "led": "led_green",
+            "title": "Telephony",
+            "link": "numLi"
+        },
+        "NEWSLETTER_URL": "",
+        "net": {
+            "more_link": "homeNet",
+            "active_count": 8,
+            "count": 8,
+            "devices": [{
+                "classes": "globe_online",
+                "type": "LAN",
+                "name": "DiskStation",
+                "url": "http:\/\/192.168.1.5"
+            }, {
+                "classes": "globe_online",
+                "type": "LAN",
+                "name": "Jennys-iPhone",
+                "url": ""
+            }, {
+                "classes": "led_green",
+                "type": "LAN",
+                "name": "PC-192-168-1-10",
+                "url": "http:\/\/192.168.1.10"
+            }, {
+                "classes": "led_green",
+                "type": "LAN",
+                "name": "PC-192-168-1-20",
+                "url": "http:\/\/192.168.1.20"
+            }, {
+                "classes": "led_green",
+                "type": "LAN",
+                "name": "PC-192-168-1-6",
+                "url": "http:\/\/192.168.1.6"
+            }, {
+                "classes": "globe_online",
+                "type": "LAN",
+                "name": "PC-192-168-1-86",
+                "url": ""
+            }, {
+                "classes": "globe_online",
+                "type": "LAN",
+                "name": "fubar",
+                "url": ""
+            }, {
+                "classes": "led_green",
+                "type": "LAN",
+                "name": "iPad",
+                "url": ""
+            }]
+        },
+        "dect": {
+            "txt": "from",
+            "led": "led_gray",
+            "title": "DECT",
+            "link": "dectSet"
+        }
+    },
+    "hide": {
+        "ssoEmail": true,
+        "shareUsb": true,
+        "liveTv": true,
+        "faxSet": true,
+        "provServ": true,
+        "dectMoniEx": true,
+        "rss": true,
+        "mobile": true,
+        "dectDev": true,
+        "dectMail": true,
+        "ssoSet": true,
+        "dectMoni": true,
+        "liveImg": true
+    },
+    "pid": "overview",
+    "sid": "08dc2038a4cddc35"
+}
