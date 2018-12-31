@@ -174,7 +174,7 @@ class FritzBox:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='FritzBox 7430 DSL speed check')
+    parser = argparse.ArgumentParser(description='Fritz!Box 7430 DSL monitoring')
     parser.add_argument('-u', '--user', default='admin', help='User name')
     parser.add_argument('-p', '--password', required=True, help='Password')
     parser.add_argument('-H', '--host', default='fritz.box', help='FritzBox base URL')
