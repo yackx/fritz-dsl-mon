@@ -73,24 +73,27 @@ class FritzBox:
         path = '/internet/dsl_stats_tab.lua?sid=' + self.sid
         with self.open_page(path) as f:
             result = f.read()
-        print(result.decode())
-        decoded = result.decode()
+        html = result.decode().strip().replace('\n', '')
+        # print(html)
 
-        max_dslam = self.scrape_values('Max. DSLAM throughput', decoded)
-        attainable = self.scrape_values('Attainable throughput', decoded)
-        current = self.scrape_values('Current throughput', decoded)
-        seamless = self.scrape_values('Seamless rate adaptation', decoded)
-        latency = self.scrape_values('Latency', decoded)
-        inp = self.scrape_values('Impulse Noise Protection \\(INP\\)', decoded)
-        g_inp = self.scrape_values('G.INP', decoded)
-        snr_ratio = self.scrape_values('Signal-to-noise ratio', decoded)
-        bitswap = self.scrape_values('Bitswap', decoded)
-        line_attenuation = self.scrape_values('Line attenuation', decoded)
-        approx_length = self.scrape_values('approximate line length', decoded)
-        profile = self.scrape_values('Profile', decoded)
-        g_vector = self.scrape_values('G.Vector', decoded)
-        carrier_record = self.scrape_values('Carrier record', decoded)
-        
+        central_exchange_errors = self.scrape_values('Central exchange', html, 4)
+        fritzbox_errors = self.scrape_values('FRITZ!Box', html, 4)
+
+        max_dslam = self.scrape_values('Max. DSLAM throughput', html)
+        attainable = self.scrape_values('Attainable throughput', html)
+        current = self.scrape_values('Current throughput', html)
+        seamless = self.scrape_values('Seamless rate adaptation', html)
+        latency = self.scrape_values('Latency', html)
+        inp = self.scrape_values('Impulse Noise Protection \\(INP\\)', html)
+        g_inp = self.scrape_values('G.INP', html)
+        snr_ratio = self.scrape_values('Signal-to-noise ratio', html)
+        bitswap = self.scrape_values('Bitswap', html)
+        line_attenuation = self.scrape_values('Line attenuation', html)
+        approx_length = self.scrape_values('approximate line length', html)
+        profile = self.scrape_values('Profile', html)
+        g_vector = self.scrape_values('G.Vector', html)
+        carrier_record = self.scrape_values('Carrier record', html)
+
         stats = {
                 # Max DSLAM throughput (kbit/s)
                 # Min is also available but not mapped
@@ -132,7 +135,17 @@ class FritzBox:
                 'g_vector_up': g_vector[2],
                 # Carrier record (eg A43)
                 'carrier_record_down': carrier_record[1],
-                'carrier_record_up': carrier_record[2],        
+                'carrier_record_up': carrier_record[2],
+                # FritzBox errors
+                'fritzbox_seconds_with_errors': fritzbox_errors[0],
+                'fritzbox_seconds_with_many_errors': fritzbox_errors[1],
+                'fritzbox_crc_errors_per_minute': fritzbox_errors[2],
+                'fritzbox_crc_errors_last_15_m': fritzbox_errors[3],
+                # Central exchange errors
+                'central_exchange_seconds_with_errors': central_exchange_errors[0],
+                'central_exchange_seconds_with_many_errors': central_exchange_errors[1],
+                'central_exchange_crc_errors_per_minute': central_exchange_errors[2],
+                'central_exchange_crc_errors_last_15_m': central_exchange_errors[3],
         }
     
         print(f'*** stats {stats}')
@@ -143,7 +156,7 @@ class FritzBox:
     def scrape_values(self, column_title, html_content, how_nany = 3):
         assert how_nany in [3, 4]
         regex = (r'<tr>'
-            rf'<td class="c1">{column_title}</td>'
+            rf'<td class="c1.*">{column_title}</td>'
             r'<td class="c2">(.*?)</td>'
             r'<td class="c3">(.*?)</td>'
             r'<td class="c4">(.*?)</td>')
