@@ -76,9 +76,10 @@ class FritzBox:
         print(result.decode())
         decoded = result.decode()
 
-        max_dslam = re.findall(self.build_html_regex('Max. DSLAM throughput'), decoded)[0]
-        attainable = re.findall(self.build_html_regex('Attainable throughput'), decoded)[0]
-        current = re.findall(self.build_html_regex('Current throughput'), decoded)[0]
+        max_dslam = self.scrape_values('Max. DSLAM throughput', decoded)
+        attainable = self.scrape_values('Attainable throughput', decoded)
+        current = self.scrape_values('Current throughput', decoded)
+        seamless = self.scrape_values('Seamless rate adaptation', decoded)
         
         # dsl_stats = DslStat(
         #         max_dslam_throughput_down = max_dslam[0],
@@ -89,23 +90,28 @@ class FritzBox:
         # print(dsl_stats)
 
         stats = {
-                'max_dslam_throughput_down': max_dslam[0],
-                'max_dslam_throughput_up': max_dslam[1],
-                'attainable_throughput_down': attainable[0],
-                'attainable_throughput_up': attainable[1],
+                'max_dslam_throughput_down': max_dslam[1],
+                'max_dslam_throughput_up': max_dslam[2],
+                'attainable_throughput_down': attainable[1],
+                'attainable_throughput_up': attainable[2],
+                'current_throughput_down': current[1],
+                'current_throughput_up': current[2],
+                'seamless_rate_adaptation_down': seamless[1],
+                'seamless_rate_adaptation_up': seamless[2],
         }
-        print(f'stats {stats}')
+        print(f'*** stats {stats}')
 
         return stats
         
 
-    def build_html_regex(self, column_title):
-        return re.compile(r'<tr>'
+    def scrape_values(self, column_title, html_content):
+        r = re.compile(r'<tr>'
             rf'<td class="c1">{column_title}</td>'
-            r'<td class="c2">kbit/s</td>'
-            r'<td class="c3">(\d+)</td>'
-            r'<td class="c4">(\d+)</td>'
+            r'<td class="c2">(.*)</td>'
+            r'<td class="c3">(.*)</td>'
+            r'<td class="c4">(.*)</td>'
             r'</tr>')
+        return re.findall(r, html_content)[0]
 
 
     def open_page(self, path):
@@ -130,5 +136,7 @@ if __name__ == "__main__":
         ssl._create_default_https_context = ssl._create_unverified_context
     
     fritz = FritzBox(args.user, args.password, host)
-    fritz.load_dsl_stats()
-    fritz.logout()
+    try:
+        fritz.load_dsl_stats()
+    finally:
+        fritz.logout()
