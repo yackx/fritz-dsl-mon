@@ -80,17 +80,61 @@ class FritzBox:
         attainable = self.scrape_values('Attainable throughput', decoded)
         current = self.scrape_values('Current throughput', decoded)
         seamless = self.scrape_values('Seamless rate adaptation', decoded)
+        latency = self.scrape_values('Latency', decoded)
+        inp = self.scrape_values('Impulse Noise Protection \\(INP\\)', decoded)
+        g_inp = self.scrape_values('G.INP', decoded)
+        snr_ratio = self.scrape_values('Signal-to-noise ratio', decoded)
+        bitswap = self.scrape_values('Bitswap', decoded)
+        line_attenuation = self.scrape_values('Line attenuation', decoded)
+        approx_length = self.scrape_values('approximate line length', decoded)
+        profile = self.scrape_values('Profile', decoded)
+        g_vector = self.scrape_values('G.Vector', decoded)
+        carrier_record = self.scrape_values('Carrier record', decoded)
         
         stats = {
+                # Max DSLAM throughput (kbit/s)
+                # Min is also available but not mapped
                 'max_dslam_throughput_down': max_dslam[1],
                 'max_dslam_throughput_up': max_dslam[2],
+                # Attainable throughput (kbit/s)
                 'attainable_throughput_down': attainable[1],
                 'attainable_throughput_up': attainable[2],
+                # Current throughput (kbit/s)
                 'current_throughput_down': current[1],
                 'current_throughput_up': current[2],
+                # Seamless rate adaptation
                 'seamless_rate_adaptation_down': seamless[1],
                 'seamless_rate_adaptation_up': seamless[2],
+                 # Latency (a qualifier) (exact meaning and possible values unknown)
+                'latency_down': latency[1],
+                'latency_up': latency[1],
+                # Impulse Noise Protection (INP) (unit not specified)
+                'impulse_noise_protection_down': inp[1],
+                'impulse_noise_protection_up': inp[2],
+                # G.INP https://www.increasebroadbandspeed.co.uk/g.inp
+                'g_inp_down': g_inp[1],
+                'g_inp_up': g_inp[2],
+                # Signal-to-noise ratio (dB)
+                'signal_to_noise_ratio_down': snr_ratio[1],
+                'signal_to_noise_ratio_up': snr_ratio[2],
+                # Bitswap
+                'bitswap_down': bitswap[1],
+                'bitswap_up': bitswap[2],
+                # Line attenuation (dB)
+                'line_attenuation_down': line_attenuation[1],
+                'line_attenuation_up': line_attenuation[2],
+                # Approximate line length (m)
+                'approximate_line_length': approx_length[1],
+                # Profile (eg 17a)
+                'profile': profile[0],
+                # G.Vector (eg full)
+                'g_vector_down': g_vector[1],
+                'g_vector_up': g_vector[2],
+                # Carrier record (eg A43)
+                'carrier_record_down': carrier_record[1],
+                'carrier_record_up': carrier_record[2],        
         }
+    
         print(f'*** stats {stats}')
 
         return stats
@@ -99,9 +143,9 @@ class FritzBox:
     def scrape_values(self, column_title, html_content):
         r = re.compile(r'<tr>'
             rf'<td class="c1">{column_title}</td>'
-            r'<td class="c2">(.*)</td>'
-            r'<td class="c3">(.*)</td>'
-            r'<td class="c4">(.*)</td>'
+            r'<td class="c2">(.*?)</td>'
+            r'<td class="c3">(.*?)</td>'
+            r'<td class="c4">(.*?)</td>'
             r'</tr>')
         return re.findall(r, html_content)[0]
 
