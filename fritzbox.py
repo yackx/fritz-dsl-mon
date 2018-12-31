@@ -140,13 +140,17 @@ class FritzBox:
         return stats
         
 
-    def scrape_values(self, column_title, html_content):
-        r = re.compile(r'<tr>'
+    def scrape_values(self, column_title, html_content, how_nany = 3):
+        assert how_nany in [3, 4]
+        regex = (r'<tr>'
             rf'<td class="c1">{column_title}</td>'
             r'<td class="c2">(.*?)</td>'
             r'<td class="c3">(.*?)</td>'
-            r'<td class="c4">(.*?)</td>'
-            r'</tr>')
+            r'<td class="c4">(.*?)</td>')
+        if how_nany is 4:
+            regex += r'<td class="c5">(.*?)</td>'
+        regex += r'</tr>'
+        r = re.compile(regex)
         return re.findall(r, html_content)[0]
 
 
