@@ -81,14 +81,6 @@ class FritzBox:
         current = self.scrape_values('Current throughput', decoded)
         seamless = self.scrape_values('Seamless rate adaptation', decoded)
         
-        # dsl_stats = DslStat(
-        #         max_dslam_throughput_down = max_dslam[0],
-        #         max_dslam_throughput_up = max_dslam[1],
-        #         attainable_throughput_down = attainable[0],
-        #         attainable_throughput_up = attainable[1],
-        # )
-        # print(dsl_stats)
-
         stats = {
                 'max_dslam_throughput_down': max_dslam[1],
                 'max_dslam_throughput_up': max_dslam[2],
