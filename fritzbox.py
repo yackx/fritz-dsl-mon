@@ -25,7 +25,6 @@ import ssl
 import re
 from urllib.request import urlopen
 from xml.etree.ElementTree import parse
-from dslstat import DslStat
 
 # Documentation of Fritz AHA see:
 # http://avm.de/fileadmin/user_upload/Global/Service/Schnittstellen/AHA-HTTP-Interface.pdf
@@ -75,29 +74,27 @@ class FritzBox:
         with self.open_page(path) as f:
             result = f.read()
         print(result.decode())
-        # print(result)
         decoded = result.decode()
-        stats = dict()
 
         max_dslam = re.findall(self.build_html_regex('Max. DSLAM throughput'), decoded)[0]
-        stats['max_dslam_throughput_down'] = max_dslam[0]
-        stats['max_dslam_throughput_up'] = max_dslam[1]
-
         attainable = re.findall(self.build_html_regex('Attainable throughput'), decoded)[0]
-        stats['attainable_throughput_down'] = attainable[0]
-        stats['attainable_throughput_up'] = attainable[1]
-
         current = re.findall(self.build_html_regex('Current throughput'), decoded)[0]
-        stats['current_throughput_down'] = current[0]
-        stats['current_throughput_up'] = current[1]
-
-        print(f'stats {stats}')
         
-        dsl_stats = DslStat(
-                max_dslam_throughput_down = max_dslam[0],
-                max_dslam_throughput_up = max_dslam[1],
-        )
-        print(dsl_stats)
+        # dsl_stats = DslStat(
+        #         max_dslam_throughput_down = max_dslam[0],
+        #         max_dslam_throughput_up = max_dslam[1],
+        #         attainable_throughput_down = attainable[0],
+        #         attainable_throughput_up = attainable[1],
+        # )
+        # print(dsl_stats)
+
+        stats = {
+                'max_dslam_throughput_down': max_dslam[0],
+                'max_dslam_throughput_up': max_dslam[1],
+                'attainable_throughput_down': attainable[0],
+                'attainable_throughput_up': attainable[1],
+        }
+        print(f'stats {stats}')
 
         return stats
         
