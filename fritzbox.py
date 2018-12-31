@@ -43,7 +43,6 @@ class FritzBox:
             dom = parse(f)
             sid = dom.findtext('./SID')
             challenge = dom.findtext('./Challenge')
-            print(f'original sid: {sid}, challenge: {challenge}')
         
         if sid == '0000000000000000':
             md5 = hashlib.md5()
@@ -59,14 +58,12 @@ class FritzBox:
         if sid == '0000000000000000':
             raise PermissionError('access denied')
 
-        print(f'sid: {sid}')
         return sid
 
 
     def logout(self):
         path = '/index.lua?sid=' + self.sid
         self.open_page(path)
-        print('logged out')
 
 
     def load_dsl_stats(self):
@@ -74,7 +71,6 @@ class FritzBox:
         with self.open_page(path) as f:
             result = f.read()
         html = result.decode().strip().replace('\n', '')
-        # print(html)
 
         central_exchange_errors = self.scrape_values('Central exchange', html, 4)
         fritzbox_errors = self.scrape_values('FRITZ!Box', html, 4)
@@ -148,8 +144,6 @@ class FritzBox:
                 'central_exchange_crc_errors_last_15_m': central_exchange_errors[3],
         }
     
-        print(f'*** stats {stats}')
-
         return stats
         
 
@@ -190,6 +184,7 @@ if __name__ == "__main__":
     
     fritz = FritzBox(args.user, args.password, host)
     try:
-        fritz.load_dsl_stats()
+        stats = fritz.load_dsl_stats()
+        print(stats)
     finally:
         fritz.logout()
