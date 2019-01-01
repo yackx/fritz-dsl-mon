@@ -27,6 +27,7 @@ import hashlib
 import os
 import ssl
 import re
+import collections
 from urllib.request import urlopen
 from xml.etree.ElementTree import parse
 
@@ -96,7 +97,7 @@ class FritzBox:
         g_vector = self.scrape_values('G.Vector', html)
         carrier_record = self.scrape_values('Carrier record', html)
 
-        stats = {
+        stats = collections.OrderedDict({
                 # Max DSLAM throughput (kbit/s)
                 # Min is also available but not mapped
                 'max_dslam_throughput_down': max_dslam[1],
@@ -148,7 +149,7 @@ class FritzBox:
                 'central_exchange_seconds_with_many_errors': central_exchange_errors[1],
                 'central_exchange_crc_errors_per_minute': central_exchange_errors[2],
                 'central_exchange_crc_errors_last_15_m': central_exchange_errors[3],
-        }
+        })
     
         return stats
         
