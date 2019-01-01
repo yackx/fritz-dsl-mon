@@ -3,7 +3,8 @@
 # fritz-dsl-mon - Monitor your DSL performance via your Fritz!Box 7430
 # Copyright (C) 2019 Youri Ackx 
 #
-# Contains fragments of "fritzswitch - Switch your Fritz!DECT200 via command line"
+# Contains fragments of 
+# fritzswitch - Switch your Fritz!DECT200 via command line
 # (sid with md5 encoded challenge)
 # Copyright (C) 2014 Richard "Shred" Körber released under GNU GPL license
 # https://github.com/shred/fritzswitch
@@ -20,7 +21,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+
 
 import argparse
 import hashlib
