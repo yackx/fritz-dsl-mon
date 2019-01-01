@@ -50,18 +50,20 @@ class FritzBox:
             sid = dom.findtext('./SID')
             challenge = dom.findtext('./Challenge')
         
-        if sid == '0000000000000000':
+        empty_sid = '0' * 16
+        encoding = 'utf-16le'
+        if sid == empty_sid:
             md5 = hashlib.md5()
-            md5.update(challenge.encode('utf-16le'))
-            md5.update('-'.encode('utf-16le'))
-            md5.update(password.encode('utf-16le'))
+            md5.update(challenge.encode(encoding))
+            md5.update('-'.encode(encoding))
+            md5.update(password.encode(encoding))
             response = challenge + '-' + md5.hexdigest()
             uri = self.fritzurl + '/login_sid.lua?username=' + user + '&response=' + response
             with urlopen(uri) as f:
                 dom = parse(f)
                 sid = dom.findtext('./SID')
 
-        if sid == '0000000000000000':
+        if sid == empty_sid:
             raise PermissionError('access denied')
 
         return sid
