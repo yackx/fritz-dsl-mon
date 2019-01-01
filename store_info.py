@@ -11,6 +11,7 @@ if __name__ == "__main__":
     parser.add_argument('-u', '--user', default='admin', help='User name')
     parser.add_argument('-p', '--password', required=True, help='Password')
     parser.add_argument('-H', '--host', default='fritz.box', help='FritzBox URI')
+    parser.add_argument('-d', '--dir', default='.', help='Storage directory')
     args = parser.parse_args()
     
     host = args.host
@@ -26,9 +27,9 @@ if __name__ == "__main__":
     try:
         stats = fritz.load_dsl_stats()
         today = datetime.today().strftime('%Y%m%d')
-        file_name = f'{today}.csv'
-        mode = 'a' if os.path.exists(file_name) else 'w'
-        with open(file_name, mode) as f:
+        file_path = os.path.join(args.dir, f'{today}{os.extsep}csv')
+        mode = 'a' if os.path.exists(file_path) else 'w'
+        with open(file_path, mode) as f:
             if mode is 'w':
                 # Emit header
                 f.write('timestamp,')
