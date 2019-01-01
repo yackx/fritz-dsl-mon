@@ -25,7 +25,7 @@ if __name__ == "__main__":
     fritz = FritzBox(args.user, args.password, host)
     try:
         stats = fritz.load_dsl_stats()
-        today = datetime.today().strftime('%Y%m%d')        
+        today = datetime.today().strftime('%Y%m%d')
         file_name = f'{today}.csv'
         mode = 'a' if os.path.exists(file_name) else 'w'
         with open(file_name, mode) as f:
