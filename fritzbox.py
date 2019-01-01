@@ -175,6 +175,11 @@ class FritzBox:
         return urlopen(uri)
 
 
+    def pretty_print(self, stats):
+        for k, v in stats.items():
+            print(f'{k}: {v}')
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Fritz!Box 7430 DSL monitoring')
     parser.add_argument('-u', '--user', default='admin', help='User name')
@@ -194,6 +199,6 @@ if __name__ == "__main__":
     fritz = FritzBox(args.user, args.password, host)
     try:
         stats = fritz.load_dsl_stats()
-        print(stats)
+        fritz.pretty_print(stats)
     finally:
         fritz.logout()
