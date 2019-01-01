@@ -3,16 +3,18 @@
 import argparse
 import ssl
 import os
+import sys
 from datetime import datetime
 from fritzbox import FritzBox
 
-if __name__ == "__main__":
+
+def parse_args(sys_args):
     parser = argparse.ArgumentParser(description='Fritz!Box 7430 DSL monitoring')
     parser.add_argument('-u', '--user', default='admin', help='User name')
     parser.add_argument('-p', '--password', required=True, help='Password')
     parser.add_argument('-H', '--host', default='fritz.box', help='FritzBox URI')
     parser.add_argument('-d', '--dir', default='.', help='Storage directory')
-    args = parser.parse_args()
+    args = parser.parse_args(sys_args)
     
     host = args.host
     if not (host.startswith('http://') or host.startswith('https://')):
@@ -24,10 +26,13 @@ if __name__ == "__main__":
         ssl._create_default_https_context = ssl._create_unverified_context
     
     fritz = FritzBox(args.user, args.password, host)
-    try:
-        stats = fritz.load_dsl_stats()
+
+    return fritz, args.dir
+
+
+def process_stats(stats):
         today = datetime.today().strftime('%Y%m%d')
-        file_path = os.path.join(args.dir, f'{today}{os.extsep}csv')
+        file_path = os.path.join(directory, f'{today}{os.extsep}csv')
         mode = 'a' if os.path.exists(file_path) else 'w'
         with open(file_path, mode) as f:
             if mode is 'w':
@@ -39,5 +44,12 @@ if __name__ == "__main__":
             f.write(',')
             f.write(",".join(stats.values()))
             f.write("\n")
+
+
+if __name__ == "__main__":
+    try:
+        fritz, directory = parse_args(sys.argv[1:])
+        stats = fritz.load_dsl_stats()
+        process_stats(stats)
     finally:
         fritz.logout()
