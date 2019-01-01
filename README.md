@@ -12,10 +12,9 @@ fritz-dsl-mon:
 * Retrieves data from the DSL information page (using HTML scraping)
 * Stores them in CSV files
 
+Collected data include current and attainable throughput, S/N ratio, CRC error count and approximate cable length.
+
 This is a "scratch your own itch project". I wanted to able to detect internet connectivity issues early on in order to report them to my ISP without delay. It is therefore a mixed bag of data scraping, data collection and, hopefully at a later stage, of data aggragation, reporting and alerting.
-
-## Installation
-
 
 ## Usage
 
