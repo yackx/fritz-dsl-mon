@@ -110,5 +110,5 @@ For `sid` with `md5` encoded challenge:
 
 ## License
 
-Licensed under the GNU GPL license. See [LICENSE.md](LICENSE.md).
+Licensed under the GNU GPL license. See [LICENSE.md](LICENSE.txt).
 Copyright (C) 2019 Youri Ackx unless stated otherwise.
